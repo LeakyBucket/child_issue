@@ -1,7 +1,13 @@
-FROM alpine:3.10
+FROM rust:1.37.0
 
-COPY LICENSE README.md /
+COPY . .
 
-COPY entrypoint.sh /entrypoint.sh
+RUN cargo install --path .
 
-ENTRYPOINT ["/entrypoint.sh"]
+CMD ["child_issue"]
+
+#COPY LICENSE README.md /
+#
+#COPY entrypoint.sh /entrypoint.sh
+#
+#ENTRYPOINT ["/entrypoint.sh"]
