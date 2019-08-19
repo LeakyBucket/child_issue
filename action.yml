@@ -1,12 +1,23 @@
-name: 'Container Action Template'
-description: 'Get started with Container actions'
-author: 'GitHub'
+name: 'Child Issue'
+description: 'Creates a Child Issue'
+author: 'LeakyBucket'
 inputs: 
-  myInput:
-    description: 'Input to use'
-    default: 'world'
+  github-token:
+    description: 'GitHub Access Token.  Can be passed in using {{ secrets.GITHUB_TOKEN }}'
+    required: true
+  org:
+    description: 'GitHub organization'
+    required: true
+  project:
+    description: 'GitHub repository'
+    required: true
+  title:
+    description: 'Issue title'
+    required: true
+  body:
+    description: 'Issue body'
+  milestone:
+    description: 'Associated milestone (id)'
 runs:
   using: 'docker'
   image: 'Dockerfile'
-  args:
-    - ${{ inputs.myInput }}
