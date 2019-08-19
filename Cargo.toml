@@ -1,0 +1,15 @@
+[package]
+authors = ["Glen Holcomb"]
+edition = "2018"
+name = "child_issue"
+version = "0.1.0"
+
+[[bin]]
+name = "child_issue"
+path = "src/main.rs"
+
+[dependencies]
+clap = "*"
+hubcaps = "*"
+tokio = "*"
+hyper = "*"
