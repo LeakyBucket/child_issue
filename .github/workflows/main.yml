@@ -7,7 +7,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: LeakyBucekt/child_issue@v1
-        if: github.event.action == 'labeled' && github.event.label == 'Spawn Child'
+      - if: github.event.action == 'labeled' && github.event.label == 'Spawn Child'
       with:
         github_token: "${{ secrets.TOKEN }}"
         org: LeakyBucket
