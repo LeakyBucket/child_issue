@@ -7,7 +7,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
     - name: Conditional Issue Spawn
-      uses: LeakyBucekt/child_issue
+      uses: LeakyBucekt/child_issue@master
       if: github.event.action == 'labeled' && github.event.label == 'Spawn Child'
       with:
         github_token: "${{ secrets.TOKEN }}"
