@@ -6,13 +6,14 @@ jobs:
   label:
     runs-on: ubuntu-latest
     steps:
-      - uses: LeakyBucekt/child_issue@master
-      if: github.event.action == 'labeled' && github.event.label == 'Spawn Child'
-      with:
-        github_token: "${{ secrets.TOKEN }}"
-        org: LeakyBucket
-        project: child_issue
-        title: "Magic!"
-        template: "testing-template.md"
-        substitution_sub: "Sub for SUB"
-        substitution_and-another-thing: "An additional thing"
+      - name: Conditional Issue Spawn
+        uses: LeakyBucekt/child_issue@master
+        if: github.event.action == 'labeled' && github.event.label == 'Spawn Child'
+        with:
+          github_token: "${{ secrets.TOKEN }}"
+          org: LeakyBucket
+          project: child_issue
+          title: "Magic!"
+          template: "testing-template.md"
+          substitution_sub: "Sub for SUB"
+          substitution_and-another-thing: "An additional thing"
