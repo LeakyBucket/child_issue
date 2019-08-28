@@ -6,7 +6,7 @@ jobs:
   label:
     runs-on: ubuntu-latest
     steps:
-      - uses: LeakyBucekt/child_issue@v1
+      - uses: LeakyBucekt/child_issue@master
       - if: github.event.action == 'labeled' && github.event.label == 'Spawn Child'
       with:
         github_token: "${{ secrets.TOKEN }}"
