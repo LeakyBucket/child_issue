@@ -11,4 +11,4 @@ Content...
 
 {{ SUB }}
 
-{{ AND-ANOTHER-THING }}
+{{ AND_ANOTHER_THING }}
