@@ -7,8 +7,8 @@ jobs:
     runs-on: ubuntu-latest
     steps:
     - name: Conditional Issue Spawn
-      uses: LeakyBucket/child_issue@master
       if: github.event.action == 'labeled' && github.event.label == 'Spawn Child'
+      uses: LeakyBucket/child_issue@master
       with:
         github_token: "${{ secrets.TOKEN }}"
         org: LeakyBucket
