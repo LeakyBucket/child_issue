@@ -10,8 +10,12 @@ use hubcaps::issues::IssueOptions;
 use hubcaps::repositories::Repository;
 
 fn main () -> Result<()> {
+    println!("Starting!");
+
     match env::var("INPUT_GITHUB_TOKEN").ok() {
         Some(token) => {
+            println!("Found Auth Token");
+
             let github = Github::new(
                 "ChildIssueAction",
                 Credentials::Token(token)
@@ -30,9 +34,14 @@ fn create_issue(github: Github) -> Result<()> {
     let mut runtime = Runtime::new()?;
     let repo = github.repo(org, repo);
 
+    println!("About to build issue");
+
     runtime.block_on(
         match build_issue(&repo).ok() {
-            Some(issue) => repo.issues().create(&issue),
+            Some(issue) => {
+                println!("Creating issue");
+                repo.issues().create(&issue)
+            },
             None => panic!("Failed to build issue")
         }
     )?;
@@ -52,14 +61,18 @@ fn build_issue(repo: &Repository) -> Result<IssueOptions> {
 
     let issue = match env::var("INPUT_TEMPLATE").ok() {
         Some(template) => {
+            println!("Template specified");
             let mut issue = template::process(repo, &template, subs);
             issue.title = title;
             issue.assignee = assignee;
             issue.milestone = milestone;
 
+            println!("Template processed");
+
             issue
         },
         None => {
+            println!("No template specified");
             let body = env::var("INPUT_BODY").ok();
             let labels: Vec<String> = vec!();
             

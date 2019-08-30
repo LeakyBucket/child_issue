@@ -1,0 +1,7 @@
+version: "3.7"
+services:
+  child_issue:
+    build:
+      context: .
+    volumes:
+      - /Users/lawrenceholcomb/code/child_issue/bin:/tmp
