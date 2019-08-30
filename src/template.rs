@@ -13,6 +13,7 @@ fn populate_metadata(issue: &mut IssueOptions, template: &mut str) {
     lines.next(); // Swallow the name
     lines.next(); // Swallow the about meta
 
+    // template title
     match lines.next() {
         Some(line) => {
             match line.split(':').next_back() {
@@ -44,6 +45,7 @@ fn populate_metadata(issue: &mut IssueOptions, template: &mut str) {
         None => ()
     };
 
+    // template assignees
     match lines.next() {
         Some(line) => {
             match line.split(':').next_back() {
@@ -94,7 +96,10 @@ pub fn process(repo: &Repository, template_name: &str, subs: HashMap<String, Str
                 None => ()
             }
         },
-        Err(_) => panic!("Template could not be fetched!")
+        Err(error) => {
+            dbg!(error);
+            panic!("Template could not be fetched!");
+        }
     };
 
     issue
@@ -104,7 +109,9 @@ fn substitute(body: &mut str, subs: HashMap<String, String>) -> String {
     let mut subbed = body.to_string();
 
     for (target, replacement) in subs.iter() {
-        subbed = subbed.replace(target, replacement);
+        let wrapped = format!("{{{{ {} }}}}", target);
+
+        subbed = subbed.replace(&wrapped, replacement);
     }
 
     subbed
