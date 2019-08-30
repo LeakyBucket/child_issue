@@ -4,7 +4,8 @@ COPY . .
 
 #RUN cargo install --path .
 
-CMD ["bin/child_issue"]
+#CMD ["bin/child_issue"]
+ENTRYPOINT [ "child_issue" ]
 
 #COPY LICENSE README.md /
 #
