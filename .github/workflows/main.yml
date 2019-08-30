@@ -12,7 +12,7 @@ jobs:
       with:
         github_token: "${{ secrets.TOKEN }}"
         org: LeakyBucket
-        project: child_issue
+        repo: child_issue
         title: "Magic!"
         template: "testing-template.md"
         substitution_sub: "Sub for SUB"
