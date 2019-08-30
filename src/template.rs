@@ -23,10 +23,21 @@ fn populate_metadata(issue: &mut IssueOptions, template: &mut str) {
         None => ()
     };
 
+    // template labels
     match lines.next() {
         Some(line) => {
             match line.split(':').next_back() {
-                Some(labels) => issue.labels = labels.trim_start().split(',').map(|tag| tag.to_string()).collect(),
+                Some(labels) => {
+                    let trimmed = labels.trim_start();
+
+                    if trimmed != "''" {
+                        issue.labels = labels.trim_start()
+                                             .trim_matches('\'')
+                                             .split(',')
+                                             .map(|tag| tag.to_string())
+                                             .collect::<Vec<String>>()
+                    }
+                },
                 None => ()
             }
         },
