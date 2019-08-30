@@ -10,7 +10,7 @@ use hubcaps::issues::IssueOptions;
 use hubcaps::repositories::Repository;
 
 fn main () -> Result<()> {
-    match env::var("INPUT_GITHUB-TOKEN").ok() {
+    match env::var("INPUT_GITHUB_TOKEN").ok() {
         Some(token) => {
             let github = Github::new(
                 "ChildIssueAction",
@@ -25,7 +25,7 @@ fn main () -> Result<()> {
 
 fn create_issue(github: Github) -> Result<()> {
     let org = env::var("INPUT_ORG").expect("GitHub org not provided");
-    let repo = env::var("INPUT_PROJECT").expect("GitHub project not provided");
+    let repo = env::var("INPUT_REPO").expect("GitHub repo not provided");
 
     let mut runtime = Runtime::new()?;
     let repo = github.repo(org, repo);
@@ -72,18 +72,8 @@ fn build_issue(repo: &Repository) -> Result<IssueOptions> {
 
 fn substitutions(subs: &mut HashMap<String, String>) {
     for (key, value) in env::vars() {
-        match key.starts_with("INPUT_SUBSTITUTION") {
-            true => {
-                let mut match_parts: Vec<&str> = key.as_str().split('_').collect();
-
-                match match_parts.pop() {
-                    Some(target) => {
-                        subs.insert(target.to_string(), value);
-                    },
-                    None => ()
-                }
-            },
-            false => ()
+        if key.starts_with("INPUT_SUBSTITUTION") {
+            subs.insert(key.trim_start_matches("INPUT_SUBSTITUTION_").to_string(), value);
         }
     }
 
